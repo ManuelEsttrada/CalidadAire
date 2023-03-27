@@ -1,0 +1,16 @@
+INSTLAR MODULOS requests y matplotlib
+->Falta de documentacion, 
+	@file
+	@brief
+	@author
+	@date
+->Por que descartar 6:00 y 5:00 PM
+
+
+PROPUESTAS
+->Funcion para transformar respuesta a Listas
+->Funcion para llenar vectores o listas
+->Funcion para graficar los datos en un formato
+
+
+
