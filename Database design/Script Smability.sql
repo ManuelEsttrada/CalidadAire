@@ -1,0 +1,70 @@
+/**
+@file: Script Smability
+@brief: Script with commands to create the Smability database
+@date: 3/13/2023
+@author: Manuel Estrada Maldonado
+*/
+
+DROP DATABASE smability;
+
+CREATE DATABASE smability;
+USE smability;
+
+CREATE TABLE LocationData(
+	idLocation INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	Place VARCHAR(50),
+	Latitude DECIMAL(10,8),
+	Longitude DECIMAL(10,8)
+);
+
+CREATE TABLE userData(
+	idUser INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	UserName VARCHAR(50)
+);
+
+CREATE TABLE Report (
+  idReport INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  ReportName VARCHAR(30),
+  StartDate TIMESTAMP NULL DEFAULT NULL,
+  EndDate TIMESTAMP NULL DEFAULT NULL,
+  idUser INT NOT NULL REFERENCES userData(idUser) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+CREATE TABLE Sensor(
+	idSensor INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	Alias VARCHAR(20),
+	Token INT NOT NULL,
+	DeviceMode INT,
+	idLocation INT NOT NULL REFERENCES LocationData(idLocation) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+CREATE TABLE Alert(
+	idAlert INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	TimeData TIMESTAMP NULL DEFAULT NULL,
+	information VARCHAR(50),
+	idSensor INT NOT NULL REFERENCES Sensor(idSensor) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE Measure(
+	idMeasure INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	idSmability INT, 
+	kindMeasure VARCHAR(20),
+	units VARCHAR(8)
+);
+
+
+CREATE TABLE Sample(
+	idSample INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	SampleNumber INT, 
+	TimeData TIMESTAMP NULL DEFAULT NULL,
+	SampleData DECIMAL(10,7),
+	idReport INT NOT NULL REFERENCES Report(idReport) ON DELETE CASCADE ON UPDATE CASCADE,
+	idSensor INT NOT NULL REFERENCES Sensor(idSensor) ON DELETE NO ACTION ON UPDATE CASCADE, 
+	idMeasure INT NOT NULL REFERENCES Measure(idMeasure) ON DELETE NO ACTION ON UPDATE CASCADE
+);
+
+SHOW TABLES;
+
+
+
